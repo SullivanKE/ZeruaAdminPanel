@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Zerua Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="container">
+
+
+        <textarea id="copy-to-clipboard" hidden></textarea>
+        <!--Header-->
+        <div class="container p-0">
+
+            <img class="img-fluid rounded border border-dark mx-0 my-2" src="./img/banner.webp">
+
+        </div>
+
+        <div class="main-content border border-dark rounded">
+            <ul class="nav nav-tabs nav-tab-style large-section rounded-top" id="main_content" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="sessions-tab" data-bs-toggle="tab" data-bs-target="#sessions"
+                        type="button" role="tab" aria-controls="sessions" aria-selected="true">Sessions</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="polls-tab" data-bs-toggle="tab" data-bs-target="#polls" type="button"
+                        role="tab" aria-controls="polls" aria-selected="false">Polls</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="players-tab" data-bs-toggle="tab" data-bs-target="#players"
+                        type="button" role="tab" aria-controls="players" aria-selected="false">Players</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="allContent">
+
+
+                <!--~~~~~~~~-->
+                <!--Sessions-->
+                <!--~~~~~~~~-->
+                <div class="tab-pane fade show active" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
+                    <!--Columns-->
+                    <div class="container">
+                        <div class="row">
+                            <!--Side Bar for session listings-->
+                            <div class="col-lg-4 col-xs-6 pb-3">
+                                <div class="border border-dark rounded mt-2 me-2 mb-2 h-100  large-section">
+
+
+                                    <!--List of all sidebar items-->
+                                    <ul class="nav nav-tabs rounded-top nav-tab-style nav-fill" id="sidebar-tabs"
+                                        role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="local-tab" data-bs-toggle="tab"
+                                                data-bs-target="#local" type="button" role="tab" aria-controls="local"
+                                                aria-selected="true">Local Drafts</button>
+
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="server-tab" data-bs-toggle="tab"
+                                                data-bs-target="#server" type="button" role="tab" aria-controls="server"
+                                                aria-selected="false">Server Sessions</button>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="local" role="tabpanel"
+                                            aria-labelledby="local-tab">
+                                            <div class="m-1">
+                                                <button class="btn btn-success w-100" id="sidebar-add"><strong>Create
+                                                        New
+                                                        Session</strong></button>
+                                            </div>
+
+                                            <span id="sidebar-list"></span> <!--Local storage populates here-->
+                                        </div>
+                                        <div class="tab-pane fade" id="server" role="tabpanel"
+                                            aria-labelledby="server-tab">
+                                            <!--TODO: Remote fetch pagation here-->
+                                            <div class="m-1">
+                                                <button class="btn btn-secondary w-100" id="sidebar-refresh"><strong>Refresh</strong></button>
+                                            </div>
+
+                                            <span id="sessions-serverData"></span>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!--This is the start of the sidebar card HTML template-->
+                                    <!-- <div class="card m-1">
+                    <div class="card-header">
+                        <a class="btn btn-primary w-100" data-bs-toggle="collapse" href="#session-id-1" role="button" aria-expanded="false" aria-controls="session-id-1">
+                            <strong class="text-center">1: Session Name - DM: Petra</strong>
+                        </a>
+                    </div>
+                    <div class="collapse" id="session-id-1">
+                        <div class="card-body p-1">
+                            <table class="table table-borderless table-sm">
+                                <tr>
+                                    <td class="p-0">
+                                        player
+                                    </td>
+                                    <td class="p-0">
+                                        character
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-2 p-2">
+                                    <small>Date: 1/1/1001</small>
+                                </div>
+                                <div class="col-lg-8 col-xs-10 p-2 ms-auto">
+                                    <div class="row align-items-end">
+                                        <div class="col-8 ms-auto">
+                                            <button class="btn btn-primary btn-sm" id="sidebar-id-open"><i class="bi-folder2-open"></i></button>
+                                            <button class="btn btn-success btn-sm" id="sidebar-id-copy"><i class="bi-clipboard"></i></button>
+                                            <button class="btn btn-danger btn-sm" id="sidebar-id-delete"><i class="bi-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                                    <!--This is the end of the sidebar HTML template-->
+
+                                </div>
+
+                            </div>
+                            <!--Main Content-->
+                            <div class="col-lg-8 col-xs-6 pb-3">
+                                <div class="border border-dark rounded my-2 h-100 large-section">
+
+                                    <ul class="nav nav-tabs rounded-top nav-tab-style nav-fill" id="sessions-tabs"
+                                        role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="header-input-section"
+                                                data-bs-toggle="tab" data-bs-target="#session-header" type="button"
+                                                role="tab" aria-controls="session-header" aria-selected="true"><span
+                                                    id="session-title">Session Information</span></button>
+
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="character-input-section" data-bs-toggle="tab"
+                                                data-bs-target="#session-characters" type="button" role="tab"
+                                                aria-controls="sessions-characters" aria-selected="false"><span
+                                                    id="character-title">Characters</span></button>
+                                        </li>
+
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="loot-input-section" data-bs-toggle="tab"
+                                                data-bs-target="#session-loot" type="button" role="tab"
+                                                aria-controls="sessions-loot" aria-selected="false"><span
+                                                    id="rewards-title">Rewards</span></button>
+                                        </li>
+
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="highlight-input-section" data-bs-toggle="tab"
+                                                data-bs-target="#session-highlights" type="button" role="tab"
+                                                aria-controls="sessions-highlights" aria-selected="false"><span
+                                                    id="highlights-title">Highlights</span></button>
+                                        </li>
+                                    </ul>
+
+
+                                    <div class="tab-content" id="session-content">
+                                        <div class="tab-pane fade show active p-2" id="session-header" role="tabpanel"
+                                            aria-labelledby="header-input-section">
+
+                                            <div class="row">
+                                                <!--Heading information column-->
+                                                <div class="col">
+
+                                                    <label>Session Index</label>
+                                                    <div class="input-group">
+                                                        <input class="form-control" type="number" id="head-index" />
+                                                        <button class='btn btn-sm btn-secondary' id="head-get-latest-index"><i class="bi bi-front"></i></button>
+                                                    </div>
+
+                                                    <label>Session Name</label><br />
+                                                    <input class="w-100 form-control" id="head-name" /><br />
+
+                                                    <label>Session Date</label><br />
+                                                    <input class="w-100 form-control" id="head-date" type="date" /><br />
+
+                                                    <label>Dungeon Master</label><br />
+                                                    <select class="form-select form-select-sm w-100" id="head-dm">
+
+                                                    </select><br />
+
+                                                    <label>DM's Character</label><br />
+                                                    <select class="form-select form-select-sm w-100" id="head-dmchar">
+
+                                                    </select><br />
+                                                </div>
+
+                                                <!--Controls for saving-->
+                                                <div class="col p-4">
+                                                    <div class="d-flex align-content-between flex-wrap">
+                                                        <button class="btn btn-warning w-100 rounded-top rounded-bottom-0" id="head-get" hidden>Get
+                                                            Session</button>
+                                                        <button class="btn btn-success w-100 rounded-top rounded-bottom-0" id="head-commit">Commit
+                                                            Session</button><br />
+                                                        <button class="btn btn-secondary w-100 rounded-0"
+                                                            id="head-generate">Generate
+                                                            Discord Markdown</button><br />
+                                                        <textarea class="w-100" rows="6" id="head-markdown"
+                                                            readonly></textarea>
+                                                        <button class="btn btn-danger w-100 rounded-top-0 rounded-bottom" id="head-delete">Delete
+                                                            Session</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="tab-pane fade p-2" id="session-characters" role="tabpanel"
+                                            aria-labelledby="character-input-section">
+
+
+                                            <div class="row">
+                                                <div class="col p-2">
+                                                    <label>Player</label><br />
+                                                    <select class="form-select form-select-sm w-100" id="character-player-entry">
+                                                        <option value="-1">Please select a Player</option>
+                                                    </select><br />
+                                                </div>
+                                                <div class="col p-2">
+                                                    <label>Character</label><br />
+                                                    <select class="form-select form-select-sm w-100" id="character-entry">
+                                                        <option value="-1">Please select a character</option>
+                                                    </select><br />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col p-2">
+                                                    <button class="btn btn-success btn-sm w-100" id="character-add">Add
+                                                        Character</button>
+                                                </div>
+                                            </div>
+
+                                            <hr />
+                                            <table class="table table-sm table-striped" id="character-list">
+                                                <!--Two columns-->
+
+                                            </table>
+
+
+                                        </div>
+                                        <div class="tab-pane fade p-2" id="session-loot" role="tabpanel"
+                                            aria-labelledby="loot-input-section">
+
+
+                                            <table class="w-100">
+                                                <tr>
+                                                    <td class="p-2">
+                                                        <label>Label</label>
+                                                    </td>
+                                                    <td class="p-2">
+                                                        <label>Gold</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-2">
+                                                        <input class="w-100 m-0" id="rewards-gold-label"
+                                                            placeholder="Gold item label here" type="text" /><br />
+                                                    </td>
+                                                    <td class="p-2">
+                                                        <input class="w-100 m-0" id="rewards-gold-entry"
+                                                            type="number" /><br />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center p-2">
+                                                        <button class="btn btn-success btn-sm w-100"
+                                                            id="rewards-gold-add">Add
+                                                            Gold Entry</button>
+                                                    </td>
+                                                    <td class="text-center p-2">
+                                                        <button class="btn btn-sm btn-primary w-100" id="rewards-each"
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            title="The gold you list is what is given to each player. Click to change to total.">Each</button>
+                                                        <button class="btn btn-sm btn-warning w-100" id="rewards-total"
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            title="The gold you list is before it is split. Click to change to each."
+                                                            hidden>Total</button><br />
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                            <hr />
+                                            <table class="table table-sm" id="rewards-gold-list"></table>
+                                            <!--Four columns-->
+
+
+                                            <hr />
+                                            <label>Loot</label><br />
+                                            <input class="w-100" placeholder="Loot Entry Here"
+                                                id="rewards-loot-entry" /><br />
+                                            <button class="btn btn-success btn-sm w-100" id="rewards-loot-add">Add Loot
+                                                Entry</button>
+                                            <hr />
+                                            <table class="table table-sm" id="rewards-loot-list"></table>
+
+
+
+
+                                        </div>
+                                        <div class="tab-pane fade p-2" id="session-highlights" role="tabpanel"
+                                            aria-labelledby="highlight-input-section">
+
+
+                                            <input class="w-100" placeholder="Highlight here"
+                                                id="highlights-entry"></input>
+                                            <button class="btn btn-success btn-sm w-100" id="highlights-add">Add
+                                                Highlight
+                                                Entry</button>
+                                            <hr />
+                                            <table class="table table-sm" id="highlights-list"></table>
+
+
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!--~~~~~-->
+                <!--Polls-->
+                <!--~~~~~-->
+
+
+                <div class="tab-pane fade h-100" id="polls" role="tabpanel" aria-labelledby="polls-tab">
+
+
+                    <div class="row">
+
+                        <div class="col-xxl-4 col-md-12 pb-3">
+                            <div class="border border-dark rounded mx-2 mt-2 large-section">
+
+
+                                <!--List of all sidebar items-->
+                                <ul class="nav nav-tabs rounded-top nav-tab-style nav-fill" id="sidebar-tabs"
+                                    role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="polls-timestamp-entry-tab"
+                                            data-bs-toggle="tab" data-bs-target="#polls-timestamp-entry" type="button"
+                                            role="tab" aria-controls="polls-timestamp-entry" aria-selected="true">Time
+                                            entry</button>
+
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="polls-text-entry-tab" data-bs-toggle="tab"
+                                            data-bs-target="#polls-text-entry" type="button" role="tab"
+                                            aria-controls="polls-text-entry" aria-selected="false">Text Entry</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="polls-template-entry-tab" data-bs-toggle="tab"
+                                            data-bs-target="#polls-template-entry" type="button" role="tab"
+                                            aria-controls="polls-template-entry"
+                                            aria-selected="false">Templating</button>
+                                    </li>
+                                </ul>
+
+                                <!--Time controls-->
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active p-2" id="polls-timestamp-entry"
+                                        role="tabpanel" aria-labelledby="polls-timestamp-entry-tab">
+
+                                        <input type="date" id="date" />
+                                        <input type="time" id="time" />
+
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label>Count</label>
+                                                <input type="number" class="w-100" id="interval-count" />
+                                            </div>
+                                            <div class="col-4">
+                                                <label>Interval</label>
+                                                <input type="number" class="w-100" id="interval-interval" />
+                                            </div>
+                                            <div class="col-4">
+                                                <label>Unit</label>
+                                                <select name="unit-of-time" id="interval-unit">
+                                                    <option value="minute">Minutes</option>
+                                                    <option value="hour">Hour(s)</option>
+                                                    <option value="day">Day(s)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-success w-100 mt-2" id="polls-time-add">Add
+                                            Entry</button>
+
+                                    </div>
+
+                                    <!--Text-->
+                                    <div class="tab-pane fade show p-2" id="polls-text-entry" role="tabpanel"
+                                        aria-labelledby="polls-text-entry-tab">
+
+
+                                        <div>
+                                            <textarea class="w-100 rounded" rows="4"
+                                                id="polls-text-textarea"></textarea>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <button class="btn btn-secondary"
+                                                    id="text-bold"><strong>B</strong></button>
+                                                <button class="btn btn-secondary" id="text-italics"><i>i</i></button>
+                                                <button class="btn btn-secondary" id="text-underline"><u>U</u></button>
+                                                <button class="btn btn-secondary"
+                                                    id="text-strikethrough"><del>S</del></button>
+                                                <button class="btn btn-secondary" id="text-header">#</button>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-success w-100 mt-2" id="polls-text-add">Add
+                                            Entry</button>
+
+                                    </div>
+
+                                    <!--Template-->
+                                    <div class="tab-pane fade show p-2" id="polls-template-entry" role="tabpanel"
+                                        aria-labelledby="polls-template-entry-tab">
+
+                                        <button class="btn btn-primary w-100 rounded-top rounded-bottom-0"
+                                            id="template-import">Import Template</button>
+                                        <button class="btn btn-secondary w-100 rounded-0" id="template-save">Save
+                                            Template</button>
+                                        <button class="btn btn-success w-100 rounded-bottom rounded-top-0"
+                                            id="template-add">Add Entry</button>
+
+                                    </div>
+                                </div>
+
+                                <hr />
+
+                                <div class="mx-2">
+                                    <textarea class="w-100 rounded" rows="4" id="paste-textarea" disabled></textarea>
+                                </div>
+
+
+                                <div class="position-sticky top-100 start-0 m-2">
+                                    <button class="btn btn-success" id="paste-copy">Copy</button>
+                                    <button class="btn btn-danger" id="paste-clear">Clear</button>
+                                </div>
+
+                            </div>
+
+    
+                                <!--Emoji-->
+                                <div class="border border-dark rounded m-2 p-2 large-section">
+                                    <table class="w-100">
+                                        <tr>
+                                            <td class="p-0">
+                                                <div id="emoji-selectors">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="emojis">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <button
+                                        class="btn btn-success w-100 mt-2">Random</button>
+                                </div>
+
+                        </div>
+
+                        <div class="col-xxl-8 col-md-12">
+                            <!--Entries-->
+    
+                            <div class="border border-dark rounded mx-2 mt-2 large-section">
+    
+                                <span id="entry"></span>
+
+                                    <div class="card rounded border border-dark w-100 m-1">
+                                        <div class="row g-0">
+                                            <div class="col-1 bg-secondary rounded-start">
+                                                <img src="./img/grab.webp" class="img-fluid mx-auto d-block"/>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="card-body py-0">
+                                                    <img src="./img/emoji.png" height="24" class="m-0 p-0 border border-dark rounded"/>
+                
+                                                    Sunday, January 1st 3:00 PM
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="card-body py-0"><small class="text-muted">&lt;t:1234567:F&gt;</small></div>
+                                            </div>
+                                            <div class="col-1 bg-danger rounded-end">
+                                                <button class="btn btn-danger p-0 w-100 h-100">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+    
+                            </div>
+    
+    
+    
+                        </div>
+                    </div>
+
+                    
+
+                </div>
+            </div>
+
+            <!--~~~~~~~-->
+            <!--Players-->
+            <!--~~~~~~~-->
+            <div class="tab-pane fade" id="players" role="tabpanel" aria-labelledby="players-tab">
+                <div class="row">
+                    <div class="col">
+                        <!--Player selection-->
+                        <div class="border border-dark rounded mx-2 mt-2 large-section p-2">
+                            <div class="row">
+                                <div class="col-xxl-8 col-md-12">
+                                    <div class="input-group">
+                                        <select class="form-control border border-dark" id="player-list"></select> <!--Character selection-->
+                                        <button class='btn btn-sm btn-secondary' id="player-refresh-button"><i class="bi bi-arrow-clockwise"></i></button>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-xxl-4 col-md-12">
+                                    <div class="input-group">
+                                        <input class="form-control border border-dark" placeholder="Add a new player..." type="text" id="player-add-name" />
+                                        <button class='btn btn-sm btn-success' id="player-add-button"><i class="bi bi-person-plus-fill"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <!--Player information-->
+                        <div class="border border-dark rounded mx-2 mt-2 large-section p-2">
+                                    <table class="table">
+                                        <tr>
+                                            <td>
+                                                Player name:
+                                            </td>
+                                            <td>
+                                                <span id="player-head-name"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Date Joined:
+                                            </td>
+                                            <td>
+                                                <span id="player-head-date"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Games played:
+                                            </td>
+                                            <td>
+                                                <span id="player-head-games"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Last game played:
+                                            </td>
+                                            <td>
+                                                <span id="player-head-last"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <button class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                                    title="Unlock the table above for editing. This button will become a save button, and 'Retire Player' will become cancel.">Edit Player</button> <!--Make this unretire when they're retired-->
+                                    <button class="btn btn-danger float-end" data-toggle="tooltip" data-placement="top"
+                                    title="Disable this account. Retired accounts can further be deleted.">Retire Player</button> <!--Make this delete when they're retired-->
+                                        
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col">
+                                <!--Character information in tabs-->
+                               
+                                <ul class="nav nav-tabs nav-tab-style large-section rounded-top" id="player-tabs" role="tablist"></ul>
+
+                                <div class="border border-dark rounded mx-2 mt-2 large-section p-2">
+                                    <div class="tab-content" id="player-content">
+
+                                    </div>
+                                </div>
+
+                                
+                                
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
